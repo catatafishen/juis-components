@@ -2,7 +2,13 @@
   "name": "juis-listenable",
   "version": "1.0.0",
   "description": "",
-  "main": "Listenable.js",
+  "exports": {
+    "./Component.js": "./Component.js",
+    "./ComponentUtils.js": "./ComponentUtils.js",
+    "./Container.js": "./Container.js",
+    "./JuiS.js": "./JuiS.js",
+    "./Property.js": "./Property.js"
+  },
   "type": "module",
   "scripts": {
     "test": "ava"
@@ -11,5 +17,8 @@
   "license": "ISC",
   "devDependencies": {
     "ava": "^3.15.0"
+  },
+  "dependencies": {
+    "juis-commons": "^1.0.6"
   }
 }
