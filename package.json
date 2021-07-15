@@ -1,6 +1,6 @@
 {
   "name": "juis-components",
-  "version": "1.0.0",
+  "version": "1.0.10",
   "description": "",
   "exports": {
     "./Component.js": "./Component.js",
@@ -19,6 +19,6 @@
     "ava": "^3.15.0"
   },
   "dependencies": {
-    "juis-commons": "^1.0.8"
+    "juis-commons": "^1.0.10"
   }
 }
