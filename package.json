@@ -1,5 +1,5 @@
 {
-  "name": "juis-listenable",
+  "name": "juis-components",
   "version": "1.0.0",
   "description": "",
   "exports": {
@@ -19,6 +19,6 @@
     "ava": "^3.15.0"
   },
   "dependencies": {
-    "juis-commons": "^1.0.6"
+    "juis-commons": "^1.0.8"
   }
 }
