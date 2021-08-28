@@ -69,10 +69,13 @@ let Component = function (node) {
         return boundListeners.add(listener);
     }
 
+    let destroyed = false;
     this.destroy = function () {
         boundListeners.forEach(listener => listener.destruct());
         this.removeAllListeners();
+        destroyed = true;
     };
+    this.isDestroyed = () => destroyed;
 
     let setProperty = (propertyName, property) => {
         if (property instanceof Property) {
