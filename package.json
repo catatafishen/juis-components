@@ -1,6 +1,6 @@
 {
   "name": "juis-components",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "",
   "exports": {
     "./Component.js": "./Component.js",
