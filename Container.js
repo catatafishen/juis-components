@@ -53,6 +53,23 @@ function Container(node) {
         return container.attachChild(child);
     };
 
+    let childrenByOrdinal = [];
+    container.insertOrderedChild = (child, ordinal) => {
+        let previousChild = childrenByOrdinal[ordinal];
+        childrenByOrdinal[ordinal] = child;
+        if (previousChild) {
+            return container.replaceChild(child, childrenByOrdinal[ordinal]);
+        }
+        let nextSibling = childrenByOrdinal.find((sibling, siblingOrdinal) => {
+            return sibling && siblingOrdinal > ordinal && sibling !== child;
+        });
+
+        if (nextSibling) {
+            return container.insertBefore(child, nextSibling);
+        }
+        return container.appendChild(child);
+    };
+
     /**
      * Attach a child to this container component. Use this when the child has already been added in the DOM.
      * Usually you should call appendChild or insertBefore which also handles the DOM changes. This method is public so
@@ -69,6 +86,7 @@ function Container(node) {
     container.removeChild = child => {
         container.detachChild(child);
         container.getNode().removeChild(child.getNode());
+        removeByValue(childrenByOrdinal, child);
     };
 
 
