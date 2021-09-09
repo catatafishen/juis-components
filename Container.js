@@ -164,8 +164,13 @@ function Container(node) {
                 return child;
             }
         }
-    }
+    };
 
+    container.overrideMethod("whenReady", (overridden) => {
+        return overridden()
+            .then(() => Promise.all(children.map(child => child.whenReady())))
+            .then(() => container);
+    });
     container.overrideMethod("destroy", (overridden) => {
         children.forEach(child => child.destroy());
         container.removeAllChildren();

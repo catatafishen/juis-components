@@ -109,6 +109,11 @@ let Component = function (node) {
     const thisComponent = this;
     this.getComponentInstance = () => thisComponent;
     this.equals = (other) => other.getComponentInstance() === thisComponent;
+    let waitingForPromises = [];
+    this.waitFor = (promise) => waitingForPromises.push(promise);
+    this.whenReady = function () {
+        return Promise.all(waitingForPromises).then(() => this);
+    };
 
     handler.get = (target, propertyName) => {
         if (target[propertyName] !== undefined) {
