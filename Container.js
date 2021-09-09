@@ -9,13 +9,15 @@ function Container(node) {
 
     const isComponent = component => component && component.getNode && component.getNode() instanceof Node;
     const set = (target, propertyName, propertyValue) => {
-        if (propertyName !== "nextListenable" && isComponent(propertyValue)) {
-            let newComponent = propertyValue;
-            if (isComponent(target[propertyName])) {
-                let oldComponent = target[propertyName];
-                target.replaceChild(newComponent, oldComponent);
-            } else {
-                target.appendChild(newComponent);
+        if (propertyName !== "nextListenable") {
+            let newComponent = isComponent(propertyValue)
+            let oldComponent = isComponent(target[propertyName]);
+            if (newComponent && oldComponent) {
+                target.replaceChild(propertyValue, target[propertyName]);
+            } else if (newComponent) {
+                target.appendChild(propertyValue);
+            } else if (oldComponent) {
+                target.removeChild(target[propertyName]);
             }
         }
         target[propertyName] = propertyValue;
