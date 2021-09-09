@@ -210,6 +210,26 @@ function DomNodeInterface(element) {
         }
     };
 
+    this.changeType = (newTagName) => {
+        let newElement = document.createElement(newTagName);
+        let children = [];
+        for (let i = 0; i < element.childNodes.length; i++) {
+            children.push(element.childNodes[i])
+        }
+        children.forEach(child => newElement.appendChild(child));
+        if (element.parentNode) {
+            element.parentNode.appendChild(newElement);
+        }
+        element.classList.forEach(cssClass => newElement.classList.add(cssClass));
+        element.getAttributeNames()
+            .forEach(attributeName => newElement.setAttribute(attributeName, element.getAttribute(attributeName)));
+        Object.values(globalListeners)
+            .flatMap(list => list)
+            .filter(elementCallback => elementCallback.element === element)
+            .forEach(elementCallback => elementCallback.element = newElement);
+        element = newElement;
+    };
+
     this.addWrapper = (tagName, cssClasses = []) => {
         let element = this.getElement();
         let parentNode = element.parentNode;
