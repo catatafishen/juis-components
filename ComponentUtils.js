@@ -47,6 +47,16 @@ function WrapperContainer(childTagName, childCssClasses, tagName, cssClasses) {
             childCssClasses.forEach(wrappedChild.getNode().addCssClass);
             return overridden(wrappedChild, existingChild);
         });
+        parent.overrideMethod("insertOrderedChild", function (overridden, child, ordinal) {
+            let wrappedChild;
+            if (child.getNode().getTagName() === childTagName) {
+                wrappedChild = child;
+            } else {
+                wrappedChild = wrap(childTagName, child);
+            }
+            childCssClasses.forEach(wrappedChild.getNode().addCssClass);
+            return overridden(wrappedChild, ordinal);
+        });
     }, cssClasses, tagName);
 }
 

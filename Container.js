@@ -58,7 +58,7 @@ function Container(node) {
         let previousChild = childrenByOrdinal[ordinal];
         childrenByOrdinal[ordinal] = child;
         if (previousChild) {
-            return container.replaceChild(child, childrenByOrdinal[ordinal]);
+            return container.replaceChild(child, previousChild);
         }
         let nextSibling = childrenByOrdinal.find((sibling, siblingOrdinal) => {
             return sibling && siblingOrdinal > ordinal && sibling !== child;
