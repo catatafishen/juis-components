@@ -258,6 +258,12 @@ function DomNodeInterface(element) {
             addDoubleTapListener(callback)
         }
     };
+    this.destroy = () => {
+        Object.entries(callbacks).map(([eventName, localCallbacks]) => {
+            globalListeners[eventName] = globalListeners[eventName]
+                .filter(globalListener => globalListener.callbacks !== localCallbacks);
+        });
+    };
 
     /**
      * Trigger dblclick callback also on touch screens

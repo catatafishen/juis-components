@@ -80,6 +80,7 @@ let Component = function (node) {
         boundListeners.forEach(listener => listener.destruct());
         this.removeAllListeners();
         destroyed = true;
+        node.destroy();
     };
     this.isDestroyed = () => destroyed;
 

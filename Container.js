@@ -138,6 +138,11 @@ function Container(node) {
         container.getNode().removeAllChildren();
     };
 
+    container.destroyAllChildren = () => {
+        children.forEach(child => child.destroy());
+        container.removeAllChildren();
+    };
+
     container.forEachChild = (callback) => {
         children.forEach(callback);
     };
