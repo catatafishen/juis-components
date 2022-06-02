@@ -3,6 +3,13 @@ import DomNodeInterface, {DomNodeInterface as Node} from "./DomNodeInterface.js"
 import {createTextNode} from "./ComponentUtils.js";
 import {removeByValue} from "juis-commons/JuisUtils.js";
 
+/**
+ *
+ * @param node
+ * @returns {Container}
+ * @constructor
+ * @mixes Component
+ */
 function Container(node) {
     let container = new Component(node);
     let children = [];
@@ -129,7 +136,6 @@ function Container(node) {
         children.forEach(child => child.nextListenable = null);
         children = [];
         container.getNode().removeAllChildren();
-
     };
 
     container.forEachChild = (callback) => {
@@ -192,6 +198,13 @@ function Container(node) {
     return proxy;
 }
 
+/**
+ *
+ * @param callback
+ * @param classNames
+ * @param tagName
+ * @returns {Container}
+ */
 function createContainer(callback, classNames, tagName) {
     let node = new DomNodeInterface(tagName || "DIV", classNames || []);
     let container = new Container(node);

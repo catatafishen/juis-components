@@ -8,7 +8,13 @@ let registerNodeInterface = newNodeInterface => {
     }
     NodeInterface = newNodeInterface;
 };
-
+/**
+ *
+ * @param node
+ * @returns {Component}
+ * @constructor
+ * @mixes Listenable
+ */
 let Component = function (node) {
     let propertyValues = {};
     let handler = {};
