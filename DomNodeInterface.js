@@ -14,16 +14,16 @@ const eventListenerOptions = {passive: false, capture: true};
 let globalListeners = {};
 
 let createFirstGlobalListener = (eventName) => {
-    let elementList = [];
-    globalListeners[eventName] = elementList;
+    globalListeners[eventName] = [];
 
     // Find the node which is furthest down the hierarchy and is listening to this event and call its callback
     rootElement.addEventListener(eventName, (event) => {
+        let callbacksPerElement = globalListeners[eventName];
         let element = event.target;
         let eventPackage = packageEvent(element, eventName, event);
         while (element !== null) {
             if (!element.disabled) {
-                let elementCallbacks = elementList.find(elementCallback => elementCallback.element === element);
+                let elementCallbacks = callbacksPerElement.find(elementCallback => elementCallback.elementGetter() === element);
                 if (elementCallbacks) {
                     elementCallbacks.callbacks.forEach(callback => {
                         callback(eventPackage);
@@ -86,11 +86,11 @@ let packageEvent = (element, eventName, event) => {
     return eventPackage;
 };
 
-let registerGlobalEventListener = (element, eventName, callbacks) => {
+let registerGlobalEventListener = (elementGetter, eventName, callbacks) => {
     if (globalListeners[eventName] === undefined) {
         createFirstGlobalListener(eventName);
     }
-    globalListeners[eventName].push({element, callbacks});
+    globalListeners[eventName].push({elementGetter, callbacks});
 };
 
 function createElement(tagName, classNames) {
@@ -223,10 +223,6 @@ function DomNodeInterface(element) {
         element.classList.forEach(cssClass => newElement.classList.add(cssClass));
         element.getAttributeNames()
             .forEach(attributeName => newElement.setAttribute(attributeName, element.getAttribute(attributeName)));
-        Object.values(globalListeners)
-            .flatMap(list => list)
-            .filter(elementCallback => elementCallback.element === element)
-            .forEach(elementCallback => elementCallback.element = newElement);
         element = newElement;
     };
 
@@ -256,7 +252,7 @@ function DomNodeInterface(element) {
             callbacks[eventName].push(callback);
         } else {
             callbacks[eventName] = [callback];
-            registerGlobalEventListener(getDomNode(), eventName, callbacks[eventName]);
+            registerGlobalEventListener(getDomNode, eventName, callbacks[eventName]);
         }
         if (eventName === "dblclick") {
             addDoubleTapListener(callback)
@@ -290,7 +286,7 @@ function DomNodeInterface(element) {
             callbacks["touchstart"].push(callback);
         } else {
             callbacks["touchstart"] = [callback];
-            registerGlobalEventListener(getDomNode(), "touchstart", callbacks["touchstart"]);
+            registerGlobalEventListener(getDomNode, "touchstart", callbacks["touchstart"]);
         }
     }
 
