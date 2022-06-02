@@ -70,7 +70,27 @@ let getChildCssClassMixin = (...cssClasses) => function () {
         overridden(newChild, oldChild);
     });
 };
+/**
+ * @callback componentCallback
+ * @param component {Component}
+ * @this {Component}
+ */
+/**
+ * @callback componentConstructor
+ * @param defaultCallback {componentCallback}
+ * @param defaultClassNames {[string]}
+ * @param defaultTagName {string}
+ * @returns component {Component}
+ */
 
+/**
+ *
+ * @param componentConstructor {componentConstructor}
+ * @param defaultCallback {componentCallback}
+ * @param defaultClassNames {[string]}
+ * @param defaultTagName {string}
+ * @returns {componentConstructor}
+ */
 let extendComponent = (componentConstructor, defaultCallback, defaultClassNames, defaultTagName) => {
     let constructor = function (callback, classNames, tagName) {
         return new componentConstructor(component => {

@@ -204,14 +204,19 @@ function Container(node) {
 }
 
 /**
+ * @callback containerCallback
+ * @param container {Container}
+ */
+
+/**
  *
- * @param callback
- * @param classNames
- * @param tagName
+ * @param callback {containerCallback}
+ * @param classNames {[string]}
+ * @param tagName {string}
  * @returns {Container}
  */
-function createContainer(callback, classNames, tagName) {
-    let node = new DomNodeInterface(tagName || "DIV", classNames || []);
+function createContainer(callback, classNames = [], tagName = "DIV") {
+    let node = new DomNodeInterface(tagName, classNames);
     let container = new Container(node);
     container.callback(callback);
     return container;

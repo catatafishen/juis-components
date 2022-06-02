@@ -14,6 +14,7 @@ let registerNodeInterface = newNodeInterface => {
  * @returns {Component}
  * @constructor
  * @mixes Listenable
+ * @mixin Component
  */
 let Component = function (node) {
     let propertyValues = {};
@@ -158,6 +159,18 @@ Component.prototype.overrideMethod = function (methodName, override) {
     }
 };
 
+/**
+ * @callback componentCallback
+ * @param component {Component}
+ */
+
+/**
+ *
+ * @param callback {componentCallback}
+ * @param classNames {[string]}
+ * @param tagName {string}
+ * @returns {Component}
+ */
 let createComponent = function (callback, classNames, tagName) {
     let component = new Component(new NodeInterface(tagName, classNames));
     component.callback(callback);
