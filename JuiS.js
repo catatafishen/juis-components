@@ -12,6 +12,10 @@ export default function (rootElement, constructor) {
         rootView.trigger("navigate", {url: document.location.pathname}, {propagating: false});
     };
 
-    rootView.getUrl = () => document.location.pathname;
-    return new constructor(rootView);
-};
+    let rootComponent = new constructor(rootView);
+    const urlParameters = new URLSearchParams(window.location.search);
+    const parameters = {};
+    urlParameters.forEach((value, key) => parameters[key] = value);
+    rootView.trigger("navigate", {url: document.location.pathname, parameters});
+    return rootComponent;
+}
