@@ -78,8 +78,8 @@ let getChildCssClassMixin = (...cssClasses) => function () {
 /**
  * @callback componentConstructor
  * @param defaultCallback {componentCallback}
- * @param defaultClassNames {[string]}
- * @param defaultTagName {string}
+ * @param defaultClassNames {[string]=}
+ * @param defaultTagName {string=}
  * @returns component {Component}
  */
 
@@ -87,8 +87,8 @@ let getChildCssClassMixin = (...cssClasses) => function () {
  *
  * @param componentConstructor {componentConstructor}
  * @param defaultCallback {componentCallback}
- * @param defaultClassNames {[string]}
- * @param defaultTagName {string}
+ * @param defaultClassNames {[string]=}
+ * @param defaultTagName {string=}
  * @returns {componentConstructor}
  */
 let extendComponent = (componentConstructor, defaultCallback, defaultClassNames, defaultTagName) => {
